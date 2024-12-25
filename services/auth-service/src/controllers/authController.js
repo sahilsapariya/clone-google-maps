@@ -25,7 +25,14 @@ const register = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ token });
+    res
+      .status(201)
+      .json({
+        token,
+        role: user.role,
+        username: user.username,
+        email: user.email,
+      });
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
@@ -47,7 +54,14 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.json({ token });
+    res
+      .status(201)
+      .json({
+        token,
+        role: user.role,
+        username: user.username,
+        email: user.email,
+      });
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
@@ -56,7 +70,7 @@ const login = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
   }
